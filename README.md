@@ -1,79 +1,94 @@
 
-# CS310 Project Step 1 Proposal: SUrvivor
+# SUrvivor
 
-## 1. Project Title and Group Details
+### Your Ultimate Sabancı University Campus Companion
 
-**Application name:** SUrvivor
+**SUrvivor** is a Flutter-based mobile application designed to make everyday campus life easier for Sabancı University students and faculty.
 
-**Group number:** 12
+From catching the next shuttle to deciding what to eat, SUrvivor brings essential campus information together in one convenient place.
 
-**Step 1 coordinator:** Asude Betül Öztürk
+## About the Project
 
-**Members:**
-- Zeynep Altundal: 31978
-- Asude Betül Öztürk: 34170
-- Esra Yağışan: 34212
-- İkranur Toksöz: 33928
+Campus life shouldn't require checking multiple websites and platforms just to plan your day.
 
-**GitHub repository:** https://github.com/ikranurtoksoz/CS310
+SUrvivor provides a centralized platform where users can easily access transportation schedules, dining menus, and other useful campus information.
 
-## 2. App Overview
+Our goal is to create a simple, accessible, and user-friendly mobile application that helps the Sabancı University community navigate daily campus life more efficiently.
 
-SU Campus Companion is a Flutter-based mobile application that centralizes transportation and dining information at Sabancı University.
+## Features
 
-**Problem:** Transportation schedules and campus dining information are distributed across multiple sources, requiring users to consult separate platforms for essential daily information.
+### Transportation
 
-**Solution:** The application provides a unified interface displaying shuttle and KM18 schedules, destinations, fares, and daily menus and prices across campus dining facilities.
+- **Shuttle & KM18 Schedules:** View departure times, routes, destinations, and fares.
+- **Next Departures:** Quickly check the next 2–3 departures based on the current time.
+- **Weekday & Weekend Schedules:** Access schedules according to the day.
+- **Search & Filter:** Find transportation options by destination and departure time.
 
-**Target Users:** Sabancı University students, faculty
+### Campus Dining
 
-## 3. Core Features and Optional Features
+- **Daily Menus:** Explore today's food options across campus.
+- **Dining Locations:** Access menus from:
+  - Yemekhane
+  - Küçükev
+  - Piazza
+- **Menu Prices:** Check available food items and their prices.
+- **Search:** Find specific menu items easily.
 
-### Core Features
+### Planned Additional Features
 
-1. **Transport timetable:** Shuttle and KM18 departures, with time and fare, and weekday/weekend schedules.
-2. **Next departure:** The next 2–3 departures from campus and from each destination, based on the current time.
-3. **Daily menus:** Today's menu and prices for Yemekhane, Küçükev, and Piazza, one tab per location.
-4. **Search and filter:** By destination, time window, and menu item name.
+- Weekly dining menus
+- Dormitory cleaning and bed linen change schedules
+- Turkish/English language support
 
-### Optional Features
+## Tech Stack
 
-- Weekly menu view
-- Cleaning and bed linen change schedules for the dormitories
-- Turkish/English toggle
+| Technology | Purpose |
+|---|---|
+| Flutter | Cross-platform mobile application development |
+| Dart | Application programming language |
+| Firebase Firestore | Cloud database for transportation and dining information |
+| Python | Parsing publicly available university schedule and menu data |
+| Git & GitHub | Version control and team collaboration |
 
-## 4. Data Requirements
+## Data Management
+
+SUrvivor uses **Firebase Firestore** to store and manage campus information.
 
 | Data | Fields | Storage |
 |---|---|---|
-| Shuttle & KM18 timetable | route, departure time, day type, fare | Firebase Firestore |
-| Daily menus | location, date, meal, item name, price | Firebase Firestore |
+| Shuttle & KM18 Timetables | Route, departure time, day type, fare | Firebase Firestore |
+| Daily Menus | Location, date, meal, item name, price | Firebase Firestore |
 
-**Database:** Firebase Firestore.
+### Data Sources
 
-**External API:** None required; no suitable public API has been identified yet.
+Campus information is planned to be collected through two methods:
 
-**Data entry:** Firestore is the single source the app reads from. It will be filled in two ways: (1) a small Python script that parses the university's public shuttle and menu pages where their format allows it, and (2) a manual update path (a simple admin form or direct Firestore edit) for cafés whose menus are only posted on-site or published as images. Data sources will be verified during Step 2; the app works regardless of which path is used. Durations are team estimates and will be labelled as approximate.
+1. **Automated Data Collection:** Python scripts to retrieve transportation schedules and dining information from publicly available university sources where possible.
+2. **Manual Updates:** Direct Firestore updates or an admin interface for information that cannot be collected automatically.
 
-## 5. Potential Challenges
+This approach aims to keep the application flexible and its information up to date.
 
-1. **Unverified data sources.** Pages may change layout, publish menus as PDFs/images, or update late. *Mitigation:* Manual update path (Section 4); validate data before writing; show the record's date in the app.
+## Project Goals
 
-2. **Fares and durations.** Fares change each semester; durations are not published. *Mitigation:* Editable fields, estimates labelled as approximate.
+- Simplify everyday campus life.
+- Centralize essential university information.
+- Reduce the time spent searching across different platforms.
+- Provide an intuitive and accessible mobile experience.
+- Build a scalable application that can support additional campus services in the future.
 
-3. **Time logic.** Weekday/weekend schedules, holidays, and device local time in "next departure". *Mitigation:* Unit tests with fixed timestamps.
+## Development Team
 
-4. **Offline caching.** Keeping cached data and "last updated" state consistent. *Mitigation:* Cache-first read with background refresh.
+| Team Member |
+|---|
+| Zeynep Altundal |
+| Asude Betül Öztürk |
+| Esra Yağışan |
+| İkranur Toksöz |
 
-5. **Coordination.** One Flutter codebase, four members. *Mitigation:* Feature branches, pull requests, GitHub project board.
+## Project Status
 
-## 6. Team Coordination and Responsibilities
+**Under Development**
 
-**Step 1 coordinator:** Asude Betül Öztürk organizes meetings, assigns tasks, and communicates with the assigned TA.
+SUrvivor is currently being developed as part of the **CS310 Mobile Application Development** course at Sabancı University.
 
-| Member | Step 1 tasks |
-|---|---|
-| Zeynep Altundal | App overview, core/optional feature scope, data-source survey |
-| İkranur Toksöz | GitHub repository setup (collaborators, README, Flutter .gitignore, initial commit) |
-| Esra Yağışan | Data requirements and Firebase/Firestore data model |
-| Asude Betül Öztürk | Potential challenges, proposal formatting and final PDF, submission on SUCourse |
+Features and functionality will be expanded throughout the development process.
