@@ -1,0 +1,36 @@
+
+# Dart and Flutter
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+build/
+coverage/
+
+# Flutter generated files
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Android
+android/local.properties
+android/key.properties
+*.jks
+*.keystore
+
+# iOS and macOS
+**/Pods/
+**/.symlinks/
+**/Flutter/ephemeral/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
