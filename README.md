@@ -8,7 +8,7 @@ This project is a mobile application developed using Flutter as part of the CS31
 
 **Group Members:**
 - Asude Betül Öztürk – 34170
-- Esra Yağışan – [Student ID]
+- Esra Yağışan – 34212
 - İkranur Toksöz – 33928
 - Zeynep Altundal – 31978
 
