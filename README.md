@@ -83,12 +83,6 @@ This project is developed as part of the **CS310 - Mobile Application Developmen
 | Esra Yağışan | 34212 |
 | İkranur Toksöz | 33928 |
 
-## Project Status
-
-**Under Development**
-
-SUrvivor is currently in development. Features and implementation details may be updated as the project progresses.
-
 ---
 
 Developed for the Sabancı University community.
