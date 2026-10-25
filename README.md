@@ -1,7 +1,5 @@
 # SUrvivor
 
-**Your Campus, Simplified.**
-
 SUrvivor is a Flutter-based mobile application designed to simplify daily life at Sabancı University by bringing campus transportation and dining information together in one place.
 
 The application allows students, faculty, and staff to access shuttle schedules, upcoming departures, campus menus, and prices through a single, user-friendly interface.
