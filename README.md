@@ -1,94 +1,96 @@
-
 # SUrvivor
 
-### Your Ultimate Sabancı University Campus Companion
+**Your Campus, Simplified.**
 
-**SUrvivor** is a Flutter-based mobile application designed to make everyday campus life easier for Sabancı University students and faculty.
+SUrvivor is a Flutter-based mobile application designed to simplify daily life at Sabancı University by bringing campus transportation and dining information together in one place.
 
-From catching the next shuttle to deciding what to eat, SUrvivor brings essential campus information together in one convenient place.
-
-## About the Project
-
-Campus life shouldn't require checking multiple websites and platforms just to plan your day.
-
-SUrvivor provides a centralized platform where users can easily access transportation schedules, dining menus, and other useful campus information.
-
-Our goal is to create a simple, accessible, and user-friendly mobile application that helps the Sabancı University community navigate daily campus life more efficiently.
+The application allows students, faculty, and staff to access shuttle schedules, upcoming departures, campus menus, and prices through a single, user-friendly interface.
 
 ## Features
 
-### Transportation
-
-- **Shuttle & KM18 Schedules:** View departure times, routes, destinations, and fares.
-- **Next Departures:** Quickly check the next 2–3 departures based on the current time.
-- **Weekday & Weekend Schedules:** Access schedules according to the day.
-- **Search & Filter:** Find transportation options by destination and departure time.
+### Campus Transportation
+- View shuttle and KM18 schedules, routes, and fares.
+- Check upcoming departures based on the current time.
+- Filter schedules by destination and departure time.
+- Save favourite routes for quick access.
+- Set reminders before selected departures.
 
 ### Campus Dining
+- Browse daily menus from Yemekhane, Küçükev, and Piazza.
+- View meal options and prices.
+- Search for specific menu items.
+- Save favourite meals.
 
-- **Daily Menus:** Explore today's food options across campus.
-- **Dining Locations:** Access menus from:
-  - Yemekhane
-  - Küçükev
-  - Piazza
-- **Menu Prices:** Check available food items and their prices.
-- **Search:** Find specific menu items easily.
+### User Accounts and Personalization
+- Secure login using Firebase Authentication.
+- User profiles and preferences.
+- Locally stored favourites for convenient access.
 
-### Planned Additional Features
+### Data Management
+- Admin interface for updating schedules and menus.
+- Centralized data storage using Cloud Firestore.
+- Data collection from publicly available sources where possible.
+- Manual data entry when automated collection is unavailable.
+- Last-updated timestamps for schedules and menus.
+- Local caching for offline access to previously loaded information.
 
-- Weekly dining menus
-- Dormitory cleaning and bed linen change schedules
-- Turkish/English language support
-
-## Tech Stack
+## Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| Flutter | Cross-platform mobile application development |
+| Flutter | Cross-platform mobile development |
 | Dart | Application programming language |
-| Firebase Firestore | Cloud database for transportation and dining information |
-| Python | Parsing publicly available university schedule and menu data |
-| Git & GitHub | Version control and team collaboration |
+| Firebase Authentication | User authentication |
+| Cloud Firestore | Database management |
+| Local Storage | Favourites and cached data |
+| Python | Data collection and processing |
 
-## Data Management
+## Data Sources
 
-SUrvivor uses **Firebase Firestore** to store and manage campus information.
+SUrvivor aims to integrate transportation and dining information from available university and public sources.
 
-| Data | Fields | Storage |
+| Data | Source | Approach |
 |---|---|---|
-| Shuttle & KM18 Timetables | Route, departure time, day type, fare | Firebase Firestore |
-| Daily Menus | Location, date, meal, item name, price | Firebase Firestore |
+| Shuttle schedules | mySU | University access if available; otherwise manual updates |
+| KM18 schedules | IETT | Explore automated data retrieval; otherwise manual updates |
+| Yemekhane menus | University sources | Publicly available information or manual updates |
+| Küçükev and Piazza menus | Restaurant websites and campus sources | Website data collection where possible or manual updates |
 
-### Data Sources
+All application data will be maintained in Firestore to provide a consistent source of information.
 
-Campus information is planned to be collected through two methods:
+## Future Improvements
 
-1. **Automated Data Collection:** Python scripts to retrieve transportation schedules and dining information from publicly available university sources where possible.
-2. **Manual Updates:** Direct Firestore updates or an admin interface for information that cannot be collected automatically.
+- Weekly dining menus
+- Dormitory cleaning schedules
+- Turkish and English language support
 
-This approach aims to keep the application flexible and its information up to date.
+## Target Users
 
-## Project Goals
+SUrvivor is designed for the Sabancı University community, including:
 
-- Simplify everyday campus life.
-- Centralize essential university information.
-- Reduce the time spent searching across different platforms.
-- Provide an intuitive and accessible mobile experience.
-- Build a scalable application that can support additional campus services in the future.
+- Commuting students who regularly use campus transportation.
+- Dormitory students who want quick access to dining information.
+- Faculty and staff who need transportation and dining updates.
 
 ## Development Team
 
-| Team Member |
-|---|
-| Zeynep Altundal |
-| Asude Betül Öztürk |
-| Esra Yağışan |
-| İkranur Toksöz |
+This project is developed as part of the **CS310 - Mobile Application Development** course at Sabancı University.
+
+**Group 12**
+
+| Team Member | Student ID |
+|---|---|
+| Zeynep Altundal | 31978 |
+| Asude Betül Öztürk | 34170 |
+| Esra Yağışan | 34212 |
+| İkranur Toksöz | 33928 |
 
 ## Project Status
 
 **Under Development**
 
-SUrvivor is currently being developed as part of the **CS310 Mobile Application Development** course at Sabancı University.
+SUrvivor is currently in development. Features and implementation details may be updated as the project progresses.
 
-Features and functionality will be expanded throughout the development process.
+---
+
+Developed for the Sabancı University community.
