@@ -6,7 +6,8 @@ class TransportRoute {
   final String dayType;
   final List<String> departureTimes;
   final String transportType;
-  final double? fare;
+  final double? studentFare;
+  final double? fullFare;
 
   const TransportRoute({
     required this.id,
@@ -16,8 +17,10 @@ class TransportRoute {
     required this.dayType,
     required this.departureTimes,
     required this.transportType,
-    this.fare,
+    this.studentFare,
+    this.fullFare,
   });
 
+  // Weekday/weekend and both directions belong to the same route.
   String get routeKey => '$transportType|$name';
 }

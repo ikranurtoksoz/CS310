@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 
-// In-memory demo service. Not persisted after the app is fully restarted.
+// In-memory demo service. Favorites are not persisted after app restart.
 class FavoriteService {
   FavoriteService._();
 
-  static final ValueNotifier<Set<String>> favorites = ValueNotifier(<String>{});
+  static final ValueNotifier<Set<String>> favorites =
+      ValueNotifier(<String>{});
 
-  static bool isFavorite(String routeKey) => favorites.value.contains(routeKey);
+  static bool isFavorite(String routeKey) =>
+      favorites.value.contains(routeKey);
 
   static void toggleFavorite(String routeKey) {
     final updated = Set<String>.from(favorites.value);
