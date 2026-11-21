@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'theme/app_theme.dart';
@@ -22,30 +21,18 @@ class SurvivorApp extends StatelessWidget {
       title: 'SUrvivor',
       debugShowCheckedModeBanner: false,
 
-      // Common application theme
-      theme: AppTheme.lightTheme,
+      // Sakura & Navy design system
+      theme: AppTheme.light,
 
-      // First screen
       initialRoute: '/',
 
-      // Application navigation routes
       routes: {
         '/': (context) => const SplashScreen(),
-
-        '/welcome': (context) =>
-            const WelcomeScreen(),
-
-        '/login': (context) =>
-            const LoginScreen(),
-
-        '/signup': (context) =>
-            const SignUpScreen(),
-
-        '/forgot-password': (context) =>
-            const ForgotPasswordScreen(),
-
-        '/home': (context) =>
-            const HomeScreen(),
+        '/welcome': (context) => const WelcomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignUpScreen(),
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }

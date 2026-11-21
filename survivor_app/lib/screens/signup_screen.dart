@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -30,20 +29,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _signUp() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/home',
-        (route) => false,
-      );
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign Up'),
-      ),
+      appBar: AppBar(title: const Text('Sign Up')),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -63,9 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 20),
                     Text(
                       'Create Your Account',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -96,9 +87,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return 'Please enter your email';
                         }
 
-                        if (!RegExp(
-                          r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-                        ).hasMatch(value.trim())) {
+                        if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                            .hasMatch(value.trim())) {
                           return 'Enter a valid email address';
                         }
 
@@ -150,8 +140,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              _hideConfirmPassword =
-                                  !_hideConfirmPassword;
+                              _hideConfirmPassword = !_hideConfirmPassword;
                             });
                           },
                         ),

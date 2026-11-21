@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,20 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        '/home',
-        (route) => false,
-      );
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Log In'),
-      ),
+      appBar: AppBar(title: const Text('Log In')),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -48,8 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Icon(
                       Icons.school,
@@ -60,9 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     Text(
                       'Welcome Back!',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium,
+                      style: Theme.of(context).textTheme.headlineMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 32),
@@ -76,14 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: Icon(Icons.email_outlined),
                       ),
                       validator: (value) {
-                        if (value == null ||
-                            value.trim().isEmpty) {
+                        if (value == null || value.trim().isEmpty) {
                           return 'Please enter your email';
                         }
 
-                        if (!RegExp(
-                          r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-                        ).hasMatch(value.trim())) {
+                        if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                            .hasMatch(value.trim())) {
                           return 'Enter a valid email address';
                         }
 
@@ -98,8 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       obscureText: _hidePassword,
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        prefixIcon:
-                            const Icon(Icons.lock_outline),
+                        prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _hidePassword
@@ -127,10 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/forgot-password',
-                          );
+                          Navigator.pushNamed(context, '/forgot-password');
                         },
                         child: const Text('Forgot Password?'),
                       ),

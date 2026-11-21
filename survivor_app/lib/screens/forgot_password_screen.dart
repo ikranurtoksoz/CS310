@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() =>
-      _ForgotPasswordScreenState();
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState
-    extends State<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 
@@ -33,18 +32,17 @@ class _ForgotPasswordScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Forgot Password'),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
-              child: _isSubmitted
-                  ? _buildConfirmation()
-                  : _buildResetForm(),
+      appBar: AppBar(title: const Text('Forgot Password')),
+      body: Container(
+        decoration: const BoxDecoration(gradient: AppTheme.pageGradient),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 420),
+                child: _isSubmitted ? _buildConfirmation() : _buildResetForm(),
+              ),
             ),
           ),
         ),
@@ -59,21 +57,26 @@ class _ForgotPasswordScreenState
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Icon(
-            Icons.lock_reset,
+            Icons.lock_reset_rounded,
             size: 80,
-            color: Color(0xFF003B71),
+            color: AppTheme.primaryColor,
           ),
           const SizedBox(height: 24),
-          Text(
+          const Text(
             'Reset Your Password',
-            style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: AppTheme.primaryColor,
+            ),
           ),
           const SizedBox(height: 12),
           const Text(
             'Enter your email address to request '
             'a password reset.',
             textAlign: TextAlign.center,
+            style: TextStyle(color: AppTheme.textSecondary),
           ),
           const SizedBox(height: 32),
           TextFormField(
@@ -87,13 +90,10 @@ class _ForgotPasswordScreenState
               if (value == null || value.trim().isEmpty) {
                 return 'Please enter your email';
               }
-
-              if (!RegExp(
-                r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
-              ).hasMatch(value.trim())) {
+              if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                  .hasMatch(value.trim())) {
                 return 'Enter a valid email address';
               }
-
               return null;
             },
           ),
@@ -114,13 +114,17 @@ class _ForgotPasswordScreenState
         const Icon(
           Icons.mark_email_read_outlined,
           size: 90,
-          color: Colors.green,
+          color: AppTheme.success,
         ),
         const SizedBox(height: 24),
-        Text(
+        const Text(
           'Request Received!',
-          style: Theme.of(context).textTheme.headlineMedium,
           textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            color: AppTheme.primaryColor,
+          ),
         ),
         const SizedBox(height: 16),
         Text(
@@ -128,6 +132,7 @@ class _ForgotPasswordScreenState
           '${_emailController.text.trim()}. '
           'No reset email has been sent.',
           textAlign: TextAlign.center,
+          style: const TextStyle(color: AppTheme.textSecondary),
         ),
         const SizedBox(height: 32),
         ElevatedButton(
