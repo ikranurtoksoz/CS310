@@ -321,10 +321,10 @@ class _DayChip extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
-            color: selected ? cs.primary : Colors.transparent,
+            color: selected ? AppTheme.accent : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
             border: isToday && !selected
-                ? Border.all(color: cs.primary, width: 1.2)
+                ? Border.all(color: AppTheme.accentStrong, width: 1.6)
                 : null,
           ),
           child: Column(
@@ -332,13 +332,13 @@ class _DayChip extends StatelessWidget {
               Text(label,
                   style: TextStyle(
                       fontSize: 11,
-                      color: selected ? cs.onPrimary : cs.onSurfaceVariant)),
+                      color: selected ? AppTheme.primaryColor : cs.onSurfaceVariant)),
               const SizedBox(height: 2),
               Text('$day',
                   style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
-                      color: selected ? cs.onPrimary : cs.onSurface)),
+                      color: AppTheme.primaryColor)),
             ],
           ),
         ),

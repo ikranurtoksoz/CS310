@@ -7,7 +7,7 @@ import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/forgot_password_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/main_shell.dart';
 
 void main() {
   runApp(const SurvivorApp());
@@ -45,7 +45,7 @@ class SurvivorApp extends StatelessWidget {
             const ForgotPasswordScreen(),
 
         '/home': (context) =>
-            const HomeScreen(),
+            const MainShell(),
       },
     );
   }
