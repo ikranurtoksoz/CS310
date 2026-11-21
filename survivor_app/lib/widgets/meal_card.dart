@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 import '../models/meal.dart';
 
 class MealCard extends StatelessWidget {
@@ -18,7 +20,7 @@ class MealCard extends StatelessWidget {
 
   Color _kcalColor(int kcal) {
     if (kcal < 200) return const Color(0xFF2E8B57);
-    if (kcal < 400) return const Color(0xFF2B4C7E);
+    if (kcal < 400) return AppTheme.primaryColor;
     return const Color(0xFFC0392B);
   }
 
@@ -28,7 +30,7 @@ class MealCard extends StatelessWidget {
     final cs = theme.colorScheme;
     final priceText = meal.priceTl != null
         ? '${meal.priceTl!.toStringAsFixed(0)} TL'
-        : (meal.location == DiningLocation.yemekhane ? 'Set menu' : null);
+        : (meal.location == DiningLocation.yemekhane ? 'Fiks menü' : null);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
@@ -78,14 +80,14 @@ class MealCard extends StatelessWidget {
                             child: IconButton(
                               padding: EdgeInsets.zero,
                               tooltip: isFavourite
-                                  ? 'Remove from favourites'
-                                  : 'Add to favourites',
+                                  ? 'Favorilerden çıkar'
+                                  : 'Favorilere ekle',
                               icon: Icon(
                                 isFavourite
                                     ? Icons.favorite_rounded
                                     : Icons.favorite_outline_rounded,
                                 color: isFavourite
-                                    ? const Color(0xFFE53935)
+                                    ? AppTheme.primaryColor
                                     : cs.outline,
                                 size: 24,
                               ),
@@ -114,14 +116,14 @@ class MealCard extends StatelessWidget {
                               children: [
                                 if (meal.slot != null)
                                   _Tag(meal.slot!,
-                                      icon: meal.slot == 'Lunch'
+                                      icon: meal.slot == 'Öğle'
                                           ? Icons.wb_sunny_outlined
                                           : Icons.nightlight_outlined),
                                 if (meal.kcal != null)
                                   _Tag('${meal.kcal} kcal',
                                       color: _kcalColor(meal.kcal!)),
                                 if (!meal.servedToday)
-                                  const _Tag('Not today', color: Colors.grey),
+                                  const _Tag('Bugün yok', color: AppTheme.textSecondary),
                               ],
                             ),
                           ),
@@ -188,44 +190,44 @@ class CategoryTile extends StatelessWidget {
   final double size;
 
   static const _icons = {
-    'Soup': Icons.soup_kitchen_outlined,
-    'Main': Icons.restaurant_outlined,
-    'Side': Icons.rice_bowl_outlined,
-    'Salad': Icons.eco_outlined,
-    'Dessert': Icons.cake_outlined,
-    'Drink': Icons.local_cafe_outlined,
-    'Breakfast': Icons.egg_alt_outlined,
-    'Toast': Icons.breakfast_dining_outlined,
-    'Snack': Icons.fastfood_outlined,
-    'Pasta': Icons.ramen_dining_outlined,
+    'Çorba': Icons.soup_kitchen_outlined,
+    'Ana Yemek': Icons.restaurant_outlined,
+    'Yan Yemek': Icons.rice_bowl_outlined,
+    'Salata': Icons.eco_outlined,
+    'Tatlı': Icons.cake_outlined,
+    'İçecek': Icons.local_cafe_outlined,
+    'Kahvaltı': Icons.egg_alt_outlined,
+    'Tost': Icons.breakfast_dining_outlined,
+    'Atıştırmalık': Icons.fastfood_outlined,
+    'Makarna': Icons.ramen_dining_outlined,
     'Pide': Icons.local_pizza_outlined,
     'Burger': Icons.lunch_dining_outlined,
-    'Wrap': Icons.kebab_dining_outlined,
-    'Chicken': Icons.set_meal_outlined,
-    'Meat': Icons.outdoor_grill_outlined,
+    'Dürüm': Icons.kebab_dining_outlined,
+    'Tavuk': Icons.set_meal_outlined,
+    'Et': Icons.outdoor_grill_outlined,
   };
 
   static const _colors = {
-    'Soup': Color(0xFFE67E22),
-    'Main': Color(0xFF2B4C7E),
-    'Side': Color(0xFF8E6C3A),
-    'Salad': Color(0xFF2E8B57),
-    'Dessert': Color(0xFFC2185B),
-    'Drink': Color(0xFF6D4C41),
-    'Breakfast': Color(0xFFF9A825),
-    'Toast': Color(0xFFD08C2E),
-    'Snack': Color(0xFFE53935),
-    'Pasta': Color(0xFFD4A017),
+    'Çorba': Color(0xFFE67E22),
+    'Ana Yemek': AppTheme.primaryColor,
+    'Yan Yemek': Color(0xFF8E6C3A),
+    'Salata': Color(0xFF2E8B57),
+    'Tatlı': Color(0xFFC2185B),
+    'İçecek': Color(0xFF6D4C41),
+    'Kahvaltı': Color(0xFFF9A825),
+    'Tost': Color(0xFFD08C2E),
+    'Atıştırmalık': AppTheme.primaryColor,
+    'Makarna': Color(0xFFD4A017),
     'Pide': Color(0xFFB7410E),
     'Burger': Color(0xFF8D4E1E),
-    'Wrap': Color(0xFF7B1FA2),
-    'Chicken': Color(0xFFC0392B),
-    'Meat': Color(0xFF6D1B1B),
+    'Dürüm': Color(0xFF7B1FA2),
+    'Tavuk': Color(0xFFC0392B),
+    'Et': Color(0xFF6D1B1B),
   };
 
   @override
   Widget build(BuildContext context) {
-    final c = _colors[category] ?? const Color(0xFF2B4C7E);
+    final c = _colors[category] ?? AppTheme.primaryColor;
     return Container(
       width: size,
       color: c.withValues(alpha: 0.12),

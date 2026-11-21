@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'theme/app_theme.dart';
+
 import 'screens/favourites_screen.dart';
 import 'screens/menus_screen.dart';
 
@@ -19,10 +21,7 @@ class _DiningDevAppState extends State<DiningDevApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SUrvivor',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2B4C7E)),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       home: Scaffold(
         body: IndexedStack(
           index: _index,

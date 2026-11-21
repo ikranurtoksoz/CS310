@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 import '../data/mock_meals.dart';
 import '../models/meal.dart';
 import '../services/favourites_store.dart';
@@ -17,7 +19,7 @@ class _MenusScreenState extends State<MenusScreen>
   late final TabController _tabs =
       TabController(length: DiningLocation.values.length, vsync: this);
   DateTime _date = DateUtils.dateOnly(DateTime.now());
-  String _slot = 'All';
+  String _slot = 'Tümü';
   String _query = '';
 
   @override
@@ -30,15 +32,16 @@ class _MenusScreenState extends State<MenusScreen>
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FA),
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: const Text('Campus Menus'),
-        backgroundColor: cs.surface,
-        surfaceTintColor: Colors.transparent,
+        title: const Text('Yemek Menüleri'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(gradient: AppTheme.headerGradient),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            tooltip: 'Search dishes',
+            tooltip: 'Yemek ara',
             onPressed: () async {
               final r = await showSearch<String?>(
                   context: context, delegate: _MealSearchDelegate());
@@ -90,8 +93,8 @@ class _LocationMenu extends StatelessWidget {
   final VoidCallback onClearQuery;
 
   static const _order = [
-    'Soup', 'Breakfast', 'Main', 'Pide', 'Pasta', 'Burger', 'Wrap', 'Chicken',
-    'Meat', 'Snack', 'Toast', 'Side', 'Salad', 'Dessert', 'Drink',
+    'Çorba', 'Kahvaltı', 'Ana Yemek', 'Pide', 'Makarna', 'Burger', 'Dürüm',
+    'Tavuk', 'Et', 'Atıştırmalık', 'Tost', 'Yan Yemek', 'Salata', 'Tatlı', 'İçecek',
   ];
 
   @override
@@ -103,7 +106,7 @@ class _LocationMenu extends StatelessWidget {
     final meals = mockMeals
         .where((m) => m.location == location && m.servedOn(date))
         .where((m) => q.isEmpty || m.name.toLowerCase().contains(q))
-        .where((m) => slot == 'All' || m.slot == null || m.slot == slot)
+        .where((m) => slot == 'Tümü' || m.slot == null || m.slot == slot)
         .toList();
 
     final categories = <String>[];
@@ -130,7 +133,7 @@ class _LocationMenu extends StatelessWidget {
                 child: Text(serviceHours[location]!,
                     style: theme.textTheme.bodySmall),
               ),
-              Text('${meals.length} items',
+              Text('${meals.length} ürün',
                   style: theme.textTheme.labelSmall
                       ?.copyWith(color: cs.onSurfaceVariant)),
             ],
@@ -139,7 +142,7 @@ class _LocationMenu extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                for (final v in ['All', 'Lunch', 'Dinner'])
+                for (final v in ['Tümü', 'Öğle', 'Akşam'])
                   Padding(
                     padding: const EdgeInsets.only(right: 6),
                     child: ChoiceChip(
@@ -158,7 +161,7 @@ class _LocationMenu extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: InputChip(
-                  label: Text('Search: $query'),
+                  label: Text('Arama: $query'),
                   onDeleted: onClearQuery,
                 ),
               ),
@@ -171,8 +174,8 @@ class _LocationMenu extends StatelessWidget {
                 children: [
                   Icon(Icons.no_meals, size: 48, color: cs.outline),
                   const SizedBox(height: 8),
-                  Text('No dishes found', style: theme.textTheme.titleMedium),
-                  Text('Try another day or clear the search.',
+                  Text('Yemek bulunamadı', style: theme.textTheme.titleMedium),
+                  Text('Başka bir gün seç veya aramayı temizle.',
                       style: theme.textTheme.bodySmall),
                 ],
               ),
@@ -197,8 +200,8 @@ class _LocationMenu extends StatelessWidget {
                     ..showSnackBar(SnackBar(
                       behavior: SnackBarBehavior.floating,
                       content: Text(added
-                          ? '${meal.name} added to favourites'
-                          : '${meal.name} removed from favourites'),
+                          ? '${meal.name} favorilere eklendi'
+                          : '${meal.name} favorilerden çıkarıldı'),
                       duration: const Duration(seconds: 2),
                     ));
                 },
@@ -206,7 +209,7 @@ class _LocationMenu extends StatelessWidget {
           ],
           const SizedBox(height: 16),
           Center(
-            child: Text('Last updated by admin · 08:10',
+            child: Text('Son güncelleme (admin) · 08:10',
                 style: theme.textTheme.bodySmall
                     ?.copyWith(color: cs.onSurfaceVariant)),
           ),
@@ -221,10 +224,10 @@ class _DateStrip extends StatelessWidget {
   final DateTime date;
   final ValueChanged<DateTime> onDate;
 
-  static const _days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  static const _days = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
   static const _months = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December',
+    'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz',
+    'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık',
   ];
 
   @override
@@ -266,7 +269,7 @@ class _DateStrip extends StatelessWidget {
               ),
               if (!DateUtils.isSameDay(date, today))
                 TextButton(
-                    onPressed: () => onDate(today), child: const Text('Today')),
+                    onPressed: () => onDate(today), child: const Text('Bugün')),
               IconButton(
                 icon: const Icon(Icons.chevron_right),
                 onPressed: () => onDate(date.add(const Duration(days: 7))),
