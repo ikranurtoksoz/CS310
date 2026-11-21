@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'theme/app_theme.dart';
 import 'screens/transport_screen.dart';
 
 void main() => runApp(const TransportTestApp());
@@ -10,7 +12,7 @@ class TransportTestApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     title: 'SUrvivor - Transport Test',
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
+    theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.primaryColor), useMaterial3: true),
     home: const TransportScreen(),
   );
 }

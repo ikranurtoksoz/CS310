@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -36,10 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Log In'),
       ),
-      body: SafeArea(
+      body: GradientBackground(
+        child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
@@ -51,11 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment:
                       CrossAxisAlignment.stretch,
                   children: [
-                    const Icon(
-                      Icons.school,
-                      size: 72,
-                      color: Color(0xFF003B71),
-                    ),
+                    const Center(child: BrandMark(size: 88)),
                     const SizedBox(height: 24),
 
                     Text(
@@ -148,6 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
+      ),
       ),
     );
   }

@@ -1,38 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Sabancı University blue palette, Plus Jakarta Sans typography,
+/// SUrvivor palette (Sabancı Navy + Sakura Pink), Plus Jakarta Sans,
 /// soft gradient backgrounds. Shared by every screen.
 class AppTheme {
   // Core palette (Sabancı blue tones)
-  static const Color primaryColor = Color(0xFF003B71); // SU navy
-  static const Color primaryLight = Color(0xFF1F5FA8);
-  static const Color accent = Color(0xFF4FA3E0); // sky
-  static const Color backgroundColor = Color(0xFFF3F7FC);
+  static const Color primaryColor = Color(0xFF20345C); // Sabancı Navy
+  static const Color primaryLight = Color(0xFF3B5486);
+  static const Color accent = Color(0xFFE8A6BD); // Sakura Pink
+  static const Color accentStrong = Color(0xFFDB7FA0); // deeper sakura for text/icons
+  static const Color backgroundColor = Color(0xFFFDF7FA); // Soft Ivory
   static const Color surface = Colors.white;
-  static const Color textPrimary = Color(0xFF14233A);
-  static const Color textSecondary = Color(0xFF64748B);
-  static const Color divider = Color(0xFFDCE6F2);
+  static const Color textPrimary = Color(0xFF20345C);
+  static const Color textSecondary = Color(0xFF7D8298); // Muted Slate
+  static const Color divider = Color(0xFFE2E4EA); // Cool Gray tint
 
   // Semantic colours
   static const Color success = Color(0xFF2E8B57);
   static const Color warning = Color(0xFFE09E3C);
-  static const Color danger = Color(0xFFC9485B);
-  static const Color highlight = Color(0xFFE3EEF9);
+  static const Color danger = Color(0xFFC94A6A);
+  static const Color coolGray = Color(0xFFA9ADBA);
+  static const Color highlight = Color(0xFFF7DCE6); // Petal Blush
 
   /// Subtle page gradient (top → bottom).
   static const LinearGradient pageGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFFEAF2FB), Color(0xFFF8FBFE), Colors.white],
-    stops: [0.0, 0.45, 1.0],
+    colors: [Color(0xFFF7DCE6), Color(0xFFFBEDF2), Color(0xFFFDF7FA)],
+    stops: [0.0, 0.5, 1.0],
   );
 
   /// Header gradient for app bars and hero cards.
   static const LinearGradient headerGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFF002B55), Color(0xFF003B71), Color(0xFF1F5FA8)],
+    colors: [Color(0xFF20345C), Color(0xFF3B5486), Color(0xFFE8A6BD)],
+    stops: [0.0, 0.55, 1.0],
+  );
+
+  /// Sakura hero gradient (welcome / splash).
+  static const LinearGradient sakuraGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0xFFE8A6BD), Color(0xFFF7DCE6), Color(0xFFFDF7FA)],
+    stops: [0.0, 0.55, 1.0],
   );
 
   static ThemeData get lightTheme {
@@ -66,8 +77,8 @@ class AppTheme {
 
       tabBarTheme: const TabBarThemeData(
         labelColor: Colors.white,
-        unselectedLabelColor: Color(0xFFB7CDE6),
-        indicatorColor: Color(0xFF4FA3E0),
+        unselectedLabelColor: Color(0xFFA9ADBA),
+        indicatorColor: Color(0xFFE8A6BD),
         dividerColor: Colors.transparent,
       ),
 
@@ -84,8 +95,9 @@ class AppTheme {
 
       chipTheme: ChipThemeData(
         backgroundColor: surface,
-        selectedColor: highlight,
+        selectedColor: accent,
         side: const BorderSide(color: divider),
+        checkmarkColor: primaryColor,
         labelStyle: textTheme.labelLarge?.copyWith(color: textPrimary),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
@@ -104,7 +116,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: primaryLight, width: 1.6),
+          borderSide: const BorderSide(color: accentStrong, width: 1.8),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -129,7 +141,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: primaryColor,
           minimumSize: const Size(double.infinity, 50),
-          side: const BorderSide(color: primaryColor),
+          side: const BorderSide(color: accentStrong, width: 1.6),
           textStyle: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -138,17 +150,17 @@ class AppTheme {
       ),
 
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: primaryLight),
+        style: TextButton.styleFrom(foregroundColor: accentStrong),
       ),
 
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: surface,
-        indicatorColor: highlight,
+        indicatorColor: accent,
         surfaceTintColor: Colors.transparent,
         iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(
             color: s.contains(WidgetState.selected)
                 ? primaryColor
-                : textSecondary)),
+                : coolGray)),
         labelTextStyle: WidgetStateProperty.resolveWith((s) =>
             (textTheme.labelSmall ?? const TextStyle()).copyWith(
               fontWeight: s.contains(WidgetState.selected)
@@ -179,6 +191,37 @@ class GradientBackground extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(gradient: AppTheme.pageGradient),
       child: child,
+    );
+  }
+}
+
+/// Round sakura brand mark used on splash / welcome / auth screens.
+class BrandMark extends StatelessWidget {
+  const BrandMark({super.key, this.size = 96});
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFFE8A6BD), Color(0xFFDB7FA0)],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFE8A6BD).withValues(alpha: 0.45),
+            blurRadius: 24,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Icon(Icons.local_florist_rounded,
+          size: size * 0.55, color: Colors.white),
     );
   }
 }

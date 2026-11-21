@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -41,10 +43,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Sign Up'),
       ),
-      body: SafeArea(
+      body: GradientBackground(
+        child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24),
@@ -58,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const Icon(
                       Icons.person_add_alt_1,
                       size: 72,
-                      color: Color(0xFF003B71),
+                      color: AppTheme.primaryColor,
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -177,6 +181,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         ),
+      ),
       ),
     );
   }

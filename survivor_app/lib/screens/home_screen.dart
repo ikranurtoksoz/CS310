@@ -1,12 +1,15 @@
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('SUrvivor'),
         automaticallyImplyLeading: false,
@@ -31,11 +34,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.home_outlined,
-                  size: 80,
-                  color: Color(0xFF003B71),
-                ),
+                const BrandMark(size: 96),
                 const SizedBox(height: 24),
                 Text(
                   'Welcome to SUrvivor!',

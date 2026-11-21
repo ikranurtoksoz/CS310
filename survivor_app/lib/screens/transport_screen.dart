@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
 import '../data/mock_transport_data.dart';
 import '../models/route.dart';
 import 'route_detail_screen.dart';
@@ -95,6 +97,7 @@ class _TransportScreenState extends State<TransportScreen> {
     }).toList();
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(title: const Text('Transportation')),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -149,7 +152,7 @@ class _TransportScreenState extends State<TransportScreen> {
           const Text(
             'DEMO DATA: routes, times and fares are illustrative only. '
             'Please do not rely on them for actual travel.',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+            style: TextStyle(fontSize: 12, color: AppTheme.textSecondary),
           ),
         ],
       ),
@@ -234,14 +237,14 @@ class _TransportScreenState extends State<TransportScreen> {
                       : 'Next departure: $next'
                           '${_minutesUntil(next) == 0 ? ' · leaving now' : ' · ${_minutesUntil(next)} min left'}',
                   style: TextStyle(
-                    color: next == null ? Colors.grey : Colors.red.shade700,
+                    color: next == null ? AppTheme.textSecondary : AppTheme.accentStrong,
                     fontWeight: FontWeight.w600,
                   ),
                 )
               else
                 Text(
                   '${route.dayType} schedule',
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: AppTheme.textSecondary),
                 ),
               const SizedBox(height: 4),
               const Align(
@@ -272,9 +275,9 @@ class _DepartureChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = isNext
-        ? Colors.red
+        ? AppTheme.accentStrong
         : isPast
-            ? Colors.grey
+            ? AppTheme.textSecondary
             : Theme.of(context).colorScheme.primary;
 
     return Opacity(
@@ -282,9 +285,9 @@ class _DepartureChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 8),
         decoration: BoxDecoration(
-          color: isNext ? Colors.red.withValues(alpha: 0.09) : null,
+          color: isNext ? AppTheme.highlight : null,
           border: Border.all(
-            color: isNext ? Colors.red : Colors.grey.shade400,
+            color: isNext ? AppTheme.accentStrong : AppTheme.divider,
             width: isNext ? 1.5 : 1,
           ),
           borderRadius: BorderRadius.circular(10),
@@ -303,7 +306,7 @@ class _DepartureChip extends StatelessWidget {
               Text(
                 remaining == 0 ? 'Now' : '$remaining min',
                 style: TextStyle(
-                  color: Colors.red.shade700,
+                  color: AppTheme.accentStrong,
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
                 ),

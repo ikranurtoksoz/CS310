@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
 import '../data/mock_transport_data.dart';
 import '../models/route.dart';
 import '../services/favorite_service.dart';
@@ -95,6 +97,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
     final origins = sameRoute.map((r) => r.origin).toSet().toList()..sort();
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(widget.route.name),
         actions: [
@@ -106,7 +109,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                 tooltip: saved ? 'Remove favorite' : 'Add favorite',
                 icon: Icon(
                   saved ? Icons.favorite : Icons.favorite_border,
-                  color: saved ? Colors.red : null,
+                  color: saved ? AppTheme.accentStrong : AppTheme.coolGray,
                 ),
                 onPressed: () {
                   FavoriteService.toggleFavorite(widget.route.routeKey);
@@ -140,7 +143,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
           const SizedBox(height: 4),
           const Text(
             'Fare values follow the Step 2.1 wireframe mockup; verify before real use.',
-            style: TextStyle(fontSize: 11, color: Colors.grey),
+            style: TextStyle(fontSize: 11, color: AppTheme.textSecondary),
           ),
           const SizedBox(height: 16),
           SegmentedButton<String>(
@@ -192,7 +195,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
           const Text(
             'DEMO DATA: departure times and fares are illustrative only. '
             'Reminder selection does not schedule a real notification.',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+            style: TextStyle(fontSize: 12, color: AppTheme.textSecondary),
           ),
         ],
       ),
@@ -229,7 +232,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                   title: Text(
                     time,
                     style: TextStyle(
-                      color: isToday && time == next ? Colors.red : null,
+                      color: isToday && time == next ? AppTheme.accentStrong : null,
                       fontWeight:
                           isToday && time == next ? FontWeight.bold : null,
                     ),
@@ -240,7 +243,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               ? 'Leaving now'
                               : '${_minutesUntil(time)} minutes left',
                           style: TextStyle(
-                            color: Colors.red.shade700,
+                            color: AppTheme.accentStrong,
                             fontWeight: FontWeight.w600,
                           ),
                         )

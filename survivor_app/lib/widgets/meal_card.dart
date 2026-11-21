@@ -19,9 +19,9 @@ class MealCard extends StatelessWidget {
   static const placeholder = 'assets/images/meal_placeholder.png';
 
   Color _kcalColor(int kcal) {
-    if (kcal < 200) return const Color(0xFF2E8B57);
+    if (kcal < 200) return AppTheme.success;
     if (kcal < 400) return AppTheme.primaryColor;
-    return const Color(0xFFC0392B);
+    return AppTheme.danger;
   }
 
   @override
@@ -87,8 +87,8 @@ class MealCard extends StatelessWidget {
                                     ? Icons.favorite_rounded
                                     : Icons.favorite_outline_rounded,
                                 color: isFavourite
-                                    ? AppTheme.primaryColor
-                                    : cs.outline,
+                                    ? AppTheme.accent
+                                    : AppTheme.coolGray,
                                 size: 24,
                               ),
                               onPressed: onToggleFavourite,
@@ -133,8 +133,8 @@ class MealCard extends StatelessWidget {
                               child: Text(
                                 priceText,
                                 style: theme.textTheme.labelLarge?.copyWith(
-                                    color: cs.primary,
-                                    fontWeight: FontWeight.w700),
+                                    color: AppTheme.accentStrong,
+                                    fontWeight: FontWeight.w800),
                               ),
                             ),
                         ],
