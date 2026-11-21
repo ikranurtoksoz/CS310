@@ -1,3 +1,7 @@
+import 'screens/favourites_screen.dart';
+import 'screens/menus_screen.dart';
+import 'screens/transport_screen.dart';
+
 import 'package:flutter/material.dart';
 
 import 'theme/app_theme.dart';
@@ -33,6 +37,9 @@ class SurvivorApp extends StatelessWidget {
         '/signup': (context) => const SignUpScreen(),
         '/forgot-password': (context) => const ForgotPasswordScreen(),
         '/home': (context) => const HomeScreen(),
+        '/favourites': (context) => const FavouritesScreen(),
+        '/menus': (context) => const MenusScreen(),
+        '/transport': (context) => const TransportScreen(),
       },
     );
   }
