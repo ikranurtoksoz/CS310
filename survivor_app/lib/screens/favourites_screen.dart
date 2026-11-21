@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../models/favourite_item.dart';
+import '../models/route.dart';
+import '../data/mock_transport_data.dart';
+import '../services/favorite_service.dart';
 import '../services/favourites_store.dart';
+import 'route_detail_screen.dart';
 import '../widgets/meal_card.dart';
 
 class FavouritesScreen extends StatelessWidget {
@@ -11,22 +15,29 @@ class FavouritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = FavouritesStore.instance;
     return Scaffold(
-      appBar: AppBar(title: const Text('Favourites')),
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(title: const Text('Favoriler')),
       body: ListenableBuilder(
-        listenable: store,
+        listenable: Listenable.merge([store, FavoriteService.favorites]),
         builder: (context, _) {
-          final routes = store.routes;
+          final routeKeys = FavoriteService.favorites.value;
+          final byKey = <String, TransportRoute>{};
+          for (final r in mockTransportRoutes) {
+            if (routeKeys.contains(r.routeKey)) byKey.putIfAbsent(r.routeKey, () => r);
+          }
+          final routes = byKey.values.toList();
           final meals = store.meals;
           return ListView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
-              _SectionHeader('Routes', routes.length),
-              if (routes.isEmpty) const _EmptyHint('No favourite routes yet.'),
-              for (final r in routes) _FavouriteCard(item: r),
+              _SectionHeader('Rotalar', routes.length),
+              if (routes.isEmpty)
+                const _EmptyHint('Bir rotada kalbe dokunarak kaydet.'),
+              for (final r in routes) _RouteCard(route: r),
               const SizedBox(height: 16),
-              _SectionHeader('Meals', meals.length),
+              _SectionHeader('Yemekler', meals.length),
               if (meals.isEmpty)
-                const _EmptyHint('Star a dish on the Menus screen to save it.'),
+                const _EmptyHint('Menüler ekranında bir yemeği favorile.'),
               for (final m in meals) _FavouriteCard(item: m),
               const SizedBox(height: 24),
               const _OfflineNote(),
@@ -91,16 +102,16 @@ class _FavouriteCard extends StatelessWidget {
               : null,
         ),
         trailing: IconButton(
-          tooltip: 'Remove',
+          tooltip: 'Kaldır',
           icon: const Icon(Icons.close),
-          onPressed: () {
+            onPressed: () {
             store.remove(item.id);
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(
-                content: Text('${item.title} removed'),
+                content: Text('${item.title} kaldırıldı'),
                 action: SnackBarAction(
-                  label: 'Undo',
+                  label: 'Geri al',
                   onPressed: () => store.add(item),
                 ),
               ));
@@ -124,9 +135,51 @@ class _OfflineNote extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        'Stored locally – works offline;\nsynced to your account when logged in.',
+        'Cihazda saklanır – çevrimdışı çalışır;\ngiriş yapınca hesabınla eşitlenir.',
         textAlign: TextAlign.center,
         style: theme.textTheme.bodySmall,
+      ),
+    );
+  }
+}
+
+class _RouteCard extends StatelessWidget {
+  const _RouteCard({required this.route});
+  final TransportRoute route;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: theme.colorScheme.primaryContainer,
+          child: Icon(Icons.directions_bus_rounded,
+              color: theme.colorScheme.onPrimaryContainer),
+        ),
+        title: Text(route.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+        subtitle: Text('${route.origin} → ${route.destination}',
+            maxLines: 1, overflow: TextOverflow.ellipsis),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => RouteDetailScreen(route: route)),
+        ),
+        trailing: IconButton(
+          tooltip: 'Kaldır',
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            FavoriteService.toggleFavorite(route.routeKey);
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(
+                content: Text('${route.name} kaldırıldı'),
+                action: SnackBarAction(
+                  label: 'Geri al',
+                  onPressed: () => FavoriteService.toggleFavorite(route.routeKey),
+                ),
+              ));
+          },
+        ),
       ),
     );
   }

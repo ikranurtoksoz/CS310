@@ -4,22 +4,7 @@ import '../models/favourite_item.dart';
 import '../models/meal.dart';
 
 class FavouritesStore extends ChangeNotifier {
-  FavouritesStore._() {
-    _items.addAll(const [
-      FavouriteItem(
-        id: 'route:campus_kadikoy',
-        kind: FavouriteKind.route,
-        title: 'Campus → Kadıköy',
-        subtitle: 'Next 17:30 · reminder 10 min',
-      ),
-      FavouriteItem(
-        id: 'route:levent_campus',
-        kind: FavouriteKind.route,
-        title: '4.Levent → Campus',
-        subtitle: 'Next 18:00',
-      ),
-    ]);
-  }
+  FavouritesStore._();
 
   static final FavouritesStore instance = FavouritesStore._();
 
@@ -58,7 +43,7 @@ class FavouritesStore extends ChangeNotifier {
       id: id,
       kind: FavouriteKind.meal,
       title: '${m.name} · ${m.location.label}',
-      subtitle: m.servedToday ? 'Served today!' : 'Not today',
+      subtitle: m.servedToday ? 'Bugün var!' : 'Bugün yok',
       highlight: m.servedToday,
       category: m.category,
     ));
