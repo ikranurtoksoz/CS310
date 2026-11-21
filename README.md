@@ -4,6 +4,59 @@ SUrvivor is a Flutter-based mobile application designed to simplify daily life a
 
 The application allows students, faculty, and staff to access shuttle schedules, upcoming departures, campus menus, and prices through a single, user-friendly interface.
 
+## Getting Started (Step 2.2)
+
+**Flutter version:** 3.47.5 (stable) · Dart 3.13.4
+
+```bash
+git clone https://github.com/ikranurtoksoz/CS310.git
+cd CS310/survivor_app
+flutter pub get
+flutter run            # pick a connected device / emulator
+# or, in the browser:
+flutter run -d chrome
+```
+
+The app starts with a splash screen, then Welcome → Log In / Sign Up → main screens. Authentication is UI-only in this step; any valid e-mail and a 6+ character password open the app.
+
+### Project structure
+
+```
+survivor_app/lib/
+├── main.dart               app entry, routes
+├── theme/app_theme.dart    shared palette, typography, widgets (BrandMark, GradientBackground)
+├── models/                 Meal, FavouriteItem, TransportRoute
+├── data/                   mock menu and transport data
+├── services/               FavouritesStore (meals), FavoriteService (routes)
+├── widgets/                MealCard
+└── screens/                splash, welcome, login, signup, forgot_password,
+                            main_shell (bottom navigation), home, transport,
+                            route_detail, menus, favourites
+```
+
+### Design system
+
+All screens share one theme (`AppTheme`). Use its constants instead of hard-coded colours:
+
+| Token | Hex | Use |
+|---|---|---|
+| `AppTheme.primaryColor` | `#20345C` Sabancı Navy | app bars, titles, primary buttons |
+| `AppTheme.accent` | `#E8A6BD` Sakura Pink | selected chips, nav indicator, favourites |
+| `AppTheme.accentStrong` | `#DB7FA0` | pink text/icons, focused inputs |
+| `AppTheme.highlight` | `#F7DCE6` Petal Blush | soft highlights, gradients |
+| `AppTheme.backgroundColor` | `#FDF7FA` Soft Ivory | page background |
+| `AppTheme.coolGray` | `#A9ADBA` | inactive icons |
+| `AppTheme.textSecondary` | `#7D8298` Muted Slate | secondary text |
+
+Typography: Plus Jakarta Sans via `google_fonts` (falls back to the system font offline).
+Helpers: `GradientBackground` wraps a page body with the soft gradient; `BrandMark` is the round sakura logo.
+
+### Team workflow
+
+- One branch per member (`feature/auth`, `feature/transport`, `feature/dining-favourites`, `feature/home-profile-admin`); changes reach `main` through pull requests.
+- After pulling, run `flutter pub get` (new dependency: `google_fonts`).
+- Conventional Commits (`feat(dining): …`, `style(theme): …`).
+
 ## Features
 
 ### Campus Transportation
