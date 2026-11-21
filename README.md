@@ -4,7 +4,7 @@ SUrvivor is a Flutter-based mobile application designed to simplify daily life a
 
 The application allows students, faculty, and staff to access shuttle schedules, upcoming departures, campus menus, and prices through a single, user-friendly interface.
 
-## Getting Started (Step 2.2)
+## Getting Started 
 
 **Flutter version:** 3.47.5 (stable) · Dart 3.13.4
 
@@ -48,8 +48,6 @@ All screens share one theme (`AppTheme`). Use its constants instead of hard-code
 | `AppTheme.coolGray` | `#A9ADBA` | inactive icons |
 | `AppTheme.textSecondary` | `#7D8298` Muted Slate | secondary text |
 
-Typography: Plus Jakarta Sans via `google_fonts` (falls back to the system font offline).
-Helpers: `GradientBackground` wraps a page body with the soft gradient; `BrandMark` is the round sakura logo.
 
 ### Team workflow
 
