@@ -17,7 +17,10 @@ void main() {
 
     expect(find.text('Today at campus'), findsOneWidget);
     expect(find.text('KM18 · FROM SABANCI'), findsOneWidget);
-    expect(find.text('See all departures', skipOffstage: false), findsOneWidget);
+    expect(
+      find.text('See all departures', skipOffstage: false),
+      findsOneWidget,
+    );
   });
 
   testWidgets('Admin flow: validation errors on empty save', (tester) async {
@@ -57,5 +60,49 @@ void main() {
     await tester.tap(find.text('Log out'));
     await tester.pumpAndSettle();
     expect(find.text('Welcome page'), findsOneWidget);
+  });
+
+  testWidgets('Valid admin submission shows a confirmation dialog', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_app());
+    await tester.tap(find.text('Profil'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Admin: update data'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.textContaining('Location (Yemekhane'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Yemekhane').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Date (date picker)'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Dish name'),
+      'Mercimek',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Price (TL)'),
+      '45',
+    );
+
+    await tester.tap(find.text('Category'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Soup').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Save').first);
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AlertDialog), findsOneWidget);
+    expect(find.text('Saved'), findsOneWidget);
+
+    await tester.tap(find.text('Done'));
+    await tester.pumpAndSettle();
+    expect(find.text('Role: admin'), findsOneWidget);
   });
 }

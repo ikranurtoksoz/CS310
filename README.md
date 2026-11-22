@@ -6,7 +6,7 @@ The application allows students, faculty, and staff to access shuttle schedules,
 
 ## Getting Started 
 
-**Flutter version:** 3.47.5 (stable) · Dart 3.13.4
+**Flutter version:** 3.50.0 (stable) · Dart 3.14.0 (requires Dart ^3.13.5)
 
 ```bash
 git clone https://github.com/ikranurtoksoz/CS310.git

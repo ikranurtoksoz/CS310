@@ -18,14 +18,34 @@ class AdminUpdateScreen extends StatefulWidget {
 class _AdminUpdateScreenState extends State<AdminUpdateScreen> {
   int _tab = 0;
   int _formGeneration = 0; // bumped to clear the forms ("Add another")
-  String? _savedMessage;
 
-  void _onSaved(String message) => setState(() => _savedMessage = message);
-
-  void _addAnother() => setState(() {
-    _savedMessage = null;
-    _formGeneration++;
-  });
+  /// Confirmation dialog shown after a valid submission.
+  Future<void> _onSaved(String message) async {
+    final done = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Saved'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Add another'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Done'),
+          ),
+        ],
+      ),
+    );
+    if (!mounted) return;
+    if (done == true) {
+      Navigator.of(context).pop();
+    } else {
+      setState(() => _formGeneration++);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,42 +55,27 @@ class _AdminUpdateScreenState extends State<AdminUpdateScreen> {
         child: Column(
           children: [
             Expanded(
-              child: Stack(
+              child: ListView(
+                padding: const EdgeInsets.all(20),
                 children: [
-                  ListView(
-                    padding: const EdgeInsets.all(20),
+                  _Tabs(
+                    selected: _tab,
+                    onSelect: (i) => setState(() => _tab = i),
+                  ),
+                  const SizedBox(height: 16),
+                  IndexedStack(
+                    index: _tab,
                     children: [
-                      _Tabs(
-                        selected: _tab,
-                        onSelect: (i) => setState(() => _tab = i),
+                      _MenuItemForm(
+                        key: ValueKey('menu$_formGeneration'),
+                        onSaved: _onSaved,
                       ),
-                      const SizedBox(height: 16),
-                      IndexedStack(
-                        index: _tab,
-                        children: [
-                          _MenuItemForm(
-                            key: ValueKey('menu$_formGeneration'),
-                            onSaved: _onSaved,
-                          ),
-                          _TimetableForm(
-                            key: ValueKey('time$_formGeneration'),
-                            onSaved: _onSaved,
-                          ),
-                        ],
+                      _TimetableForm(
+                        key: ValueKey('time$_formGeneration'),
+                        onSaved: _onSaved,
                       ),
                     ],
                   ),
-                  if (_savedMessage != null)
-                    Positioned(
-                      left: 16,
-                      right: 16,
-                      bottom: 16,
-                      child: _SavedPanel(
-                        message: _savedMessage!,
-                        onAddAnother: _addAnother,
-                        onDone: () => Navigator.of(context).pop(),
-                      ),
-                    ),
                 ],
               ),
             ),
@@ -124,64 +129,6 @@ class _Tabs extends StatelessWidget {
               ),
             ),
         ],
-      ),
-    );
-  }
-}
-
-class _SavedPanel extends StatelessWidget {
-  const _SavedPanel({
-    required this.message,
-    required this.onAddAnother,
-    required this.onDone,
-  });
-
-  final String message;
-  final VoidCallback onAddAnother;
-  final VoidCallback onDone;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: AppTheme.accent, width: 2),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Saved',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            Text(message, style: const TextStyle(fontSize: 13)),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: ActionButton(
-                    label: 'Add another',
-                    onPressed: onAddAnother,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ActionButton(
-                    label: 'Done',
-                    color: AppTheme.primaryColor,
-                    onPressed: onDone,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }

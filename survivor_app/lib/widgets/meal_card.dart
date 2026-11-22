@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 import '../models/meal.dart';
+import 'meal_thumb.dart';
 
 class MealCard extends StatelessWidget {
   const MealCard({
@@ -54,7 +55,7 @@ class MealCard extends StatelessWidget {
             child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CategoryTile(category: meal.category),
+              MealThumb(meal: meal),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 10, 4, 10),
