@@ -19,6 +19,10 @@ flutter run -d chrome
 
 The app starts with a splash screen, then Welcome → Log In / Sign Up → main screens. Authentication is UI-only in this step; any valid e-mail and a 6+ character password open the app.
 
+All data (timetables, menus, favourites) is placeholder data kept in memory. An internet connection is needed for the Plus Jakarta Sans font (`google_fonts`) and the dish photos (Wikipedia thumbnails); without it the app falls back to the default font and icon tiles.
+
+Run the tests with `flutter test`.
+
 ### Project structure
 
 ```
@@ -26,12 +30,13 @@ survivor_app/lib/
 ├── main.dart               app entry, routes
 ├── theme/app_theme.dart    shared palette, typography, widgets (BrandMark, GradientBackground)
 ├── models/                 Meal, FavouriteItem, TransportRoute
-├── data/                   mock menu and transport data
-├── services/               FavouritesStore (meals), FavoriteService (routes)
-├── widgets/                MealCard
+├── data/                   mock menu and transport data, Wikipedia titles for dish photos
+├── services/               FavouritesStore (meals), FavoriteService (routes), MealImageService
+├── utils/                  departures (next-departure and countdown helpers)
+├── widgets/                MealCard, MealThumb, InfoCard / SettingRow / ActionButton
 └── screens/                splash, welcome, login, signup, forgot_password,
-                            main_shell (bottom navigation), home, transport,
-                            route_detail, menus, favourites
+                            main_shell (bottom navigation, 5 tabs), home, transport,
+                            route_detail, menus, favourites, profile, admin_update
 ```
 
 ### Design system
@@ -51,8 +56,8 @@ All screens share one theme (`AppTheme`). Use its constants instead of hard-code
 
 ### Team workflow
 
-- One branch per member (`feature/auth`, `feature/transport`, `feature/dining-favourites`, `feature/home-profile-admin`); changes reach `main` through pull requests.
-- After pulling, run `flutter pub get` (new dependency: `google_fonts`).
+- One branch per member (`feature/auth`, `feature/transport`, `feature/dining-favourites`, `feature/home-profile-admin-v2`); changes reach `main` through pull requests.
+- After pulling, run `flutter pub get` (dependencies: `google_fonts`, `http`).
 - Conventional Commits (`feat(dining): …`, `style(theme): …`).
 
 ## Features
