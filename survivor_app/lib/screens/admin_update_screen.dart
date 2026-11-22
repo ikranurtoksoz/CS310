@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/wire.dart';
+import '../theme/app_theme.dart';
+import '../widgets/app_widgets.dart';
 
 /// "Admin: update data" form (wireframe 10) with Menu item / Timetable entry
 /// tabs and a "Saved" panel that appears over the same form.
@@ -22,19 +23,17 @@ class _AdminUpdateScreenState extends State<AdminUpdateScreen> {
   void _onSaved(String message) => setState(() => _savedMessage = message);
 
   void _addAnother() => setState(() {
-        _savedMessage = null;
-        _formGeneration++;
-      });
+    _savedMessage = null;
+    _formGeneration++;
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Admin: update data')),
       body: SafeArea(
         child: Column(
           children: [
-            WireHeader(
-                title: 'Admin: update data',
-                onBack: () => Navigator.of(context).pop()),
             Expanded(
               child: Stack(
                 children: [
@@ -50,11 +49,13 @@ class _AdminUpdateScreenState extends State<AdminUpdateScreen> {
                         index: _tab,
                         children: [
                           _MenuItemForm(
-                              key: ValueKey('menu$_formGeneration'),
-                              onSaved: _onSaved),
+                            key: ValueKey('menu$_formGeneration'),
+                            onSaved: _onSaved,
+                          ),
                           _TimetableForm(
-                              key: ValueKey('time$_formGeneration'),
-                              onSaved: _onSaved),
+                            key: ValueKey('time$_formGeneration'),
+                            onSaved: _onSaved,
+                          ),
                         ],
                       ),
                     ],
@@ -91,8 +92,8 @@ class _Tabs extends StatelessWidget {
     const labels = ['Menu item', 'Timetable entry'];
     return Container(
       decoration: BoxDecoration(
-        color: kWireGrey,
-        borderRadius: BorderRadius.circular(10),
+        color: AppTheme.highlight,
+        borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.all(4),
       child: Row(
@@ -114,7 +115,9 @@ class _Tabs extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: i == selected ? kWireAccent : kWireMuted,
+                      color: i == selected
+                          ? AppTheme.primaryColor
+                          : AppTheme.textSecondary,
                     ),
                   ),
                 ),
@@ -144,7 +147,7 @@ class _SavedPanel extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: const BorderSide(color: kWireBorder, width: 2),
+        side: const BorderSide(color: AppTheme.accent, width: 2),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -152,22 +155,29 @@ class _SavedPanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Saved',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const Text(
+              'Saved',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 6),
             Text(message, style: const TextStyle(fontSize: 13)),
             const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
-                    child:
-                        WireButton(label: 'Add another', onPressed: onAddAnother)),
+                  child: ActionButton(
+                    label: 'Add another',
+                    onPressed: onAddAnother,
+                  ),
+                ),
                 const SizedBox(width: 12),
                 Expanded(
-                    child: WireButton(
-                        label: 'Done',
-                        color: kWireBlueGrey,
-                        onPressed: onDone)),
+                  child: ActionButton(
+                    label: 'Done',
+                    color: AppTheme.primaryColor,
+                    onPressed: onDone,
+                  ),
+                ),
               ],
             ),
           ],
@@ -178,20 +188,20 @@ class _SavedPanel extends StatelessWidget {
 }
 
 InputDecoration _decoration(String hint, {Widget? suffix}) => InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(color: kWireMuted, fontSize: 13),
-      suffixIcon: suffix,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: kWireBorder),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: kWireBorder),
-      ),
-      errorStyle: const TextStyle(color: Color(0xFFC62828), fontSize: 12),
-    );
+  hintText: hint,
+  hintStyle: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+  suffixIcon: suffix,
+  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide: const BorderSide(color: AppTheme.divider),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide: const BorderSide(color: AppTheme.divider),
+  ),
+  errorStyle: const TextStyle(color: Color(0xFFC62828), fontSize: 12),
+);
 
 String? _required(String? v) =>
     (v == null || v.trim().isEmpty) ? 'Required' : null;
@@ -200,8 +210,18 @@ String _fmtPrice(double p) =>
     p == p.roundToDouble() ? p.toStringAsFixed(0) : p.toStringAsFixed(2);
 
 const _months = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 Widget _gap() => const SizedBox(height: 12);
@@ -251,8 +271,10 @@ class _MenuItemFormState extends State<_MenuItemForm> {
   void _save() {
     if (!_formKey.currentState!.validate()) return;
     final price = double.parse(_price.text.trim().replaceAll(',', '.'));
-    widget.onSaved('${_dish.text.trim()} (${_fmtPrice(price)} TL) was added to '
-        '$_location for ${_date!.day} ${_months[_date!.month - 1]}.');
+    widget.onSaved(
+      '${_dish.text.trim()} (${_fmtPrice(price)} TL) was added to '
+      '$_location for ${_date!.day} ${_months[_date!.month - 1]}.',
+    );
   }
 
   @override
@@ -289,8 +311,7 @@ class _MenuItemFormState extends State<_MenuItemForm> {
           _gap(),
           TextFormField(
             controller: _price,
-            keyboardType:
-                const TextInputType.numberWithOptions(decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: _decoration('Price (TL)'),
             validator: (v) {
               final p = double.tryParse((v ?? '').trim().replaceAll(',', '.'));
@@ -311,8 +332,11 @@ class _MenuItemFormState extends State<_MenuItemForm> {
             validator: (v) => v == null ? 'Required' : null,
           ),
           _gap(),
-          WireButton(
-              label: 'Save', color: kWireBlueGrey, onPressed: _save),
+          ActionButton(
+            label: 'Save',
+            color: AppTheme.primaryColor,
+            onPressed: _save,
+          ),
         ],
       ),
     );
@@ -348,24 +372,31 @@ class _TimetableFormState extends State<_TimetableForm> {
 
   Future<void> _pickTime() async {
     final t = await showTimePicker(
-        context: context, initialTime: TimeOfDay.now());
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
     if (t != null) {
-      _timeCtrl.text = '${t.hour.toString().padLeft(2, '0')}:'
+      _timeCtrl.text =
+          '${t.hour.toString().padLeft(2, '0')}:'
           '${t.minute.toString().padLeft(2, '0')}';
     }
   }
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
-    widget.onSaved('$_line $_origin → ${_destination.text.trim()} at '
-        '${_timeCtrl.text} ($_dayType) was added.');
+    widget.onSaved(
+      '$_line $_origin → ${_destination.text.trim()} at '
+      '${_timeCtrl.text} ($_dayType) was added.',
+    );
   }
 
   Widget _dropdown(String hint, List<String> items, ValueChanged<String?> on) {
     return DropdownButtonFormField<String>(
       isExpanded: true,
       decoration: _decoration(hint),
-      items: [for (final i in items) DropdownMenuItem(value: i, child: Text(i))],
+      items: [
+        for (final i in items) DropdownMenuItem(value: i, child: Text(i)),
+      ],
       onChanged: on,
       validator: (v) => v == null ? 'Required' : null,
     );
@@ -387,8 +418,11 @@ class _TimetableFormState extends State<_TimetableForm> {
             validator: _required,
           ),
           _gap(),
-          _dropdown('Day type (Weekday / Weekend)', _dayTypes,
-              (v) => _dayType = v),
+          _dropdown(
+            'Day type (Weekday / Weekend)',
+            _dayTypes,
+            (v) => _dayType = v,
+          ),
           _gap(),
           TextFormField(
             controller: _timeCtrl,
@@ -398,8 +432,11 @@ class _TimetableFormState extends State<_TimetableForm> {
             validator: _required,
           ),
           _gap(),
-          WireButton(
-              label: 'Save', color: kWireBlueGrey, onPressed: _save),
+          ActionButton(
+            label: 'Save',
+            color: AppTheme.primaryColor,
+            onPressed: _save,
+          ),
         ],
       ),
     );
